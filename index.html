@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For My Bujji</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: #fff5f8;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      width: 100%;
+      max-width: 600px;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      text-align: center;
+      margin-top: 20px;
+    }
+    img {
+      width: 100%;
+      border-radius: 14px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      object-fit: cover;
+    }
+    h1 {
+      margin: 0 0 12px;
+    }
+    .subtitle {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 10px;
+    }
+    .stage-text {
+      margin: 10px 0 20px;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+    .nav {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    button {
+      flex: 1;
+      padding: 12px;
+      border-radius: 999px;
+      border: none;
+      background: #ff4f8b;
+      color: #fff;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: #ffd0e0;
+      cursor: default;
+    }
+    .emoji {
+      font-size: 40px;
+      margin: 10px 0;
+    }
+    .small-note {
+      font-size: 11px;
+      margin-top: 12px;
+      color: #777;
+    }
+    .yesno-btn {
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 18px;
+      margin: 10px;
+      width: 45%;
+      border: none;
+      cursor: pointer;
+    }
+    .yes-btn {
+      background: #4CAF50;
+      color: white;
+    }
+    .no-btn {
+      background: #f44336;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ⭐ Hidden Background Music -->
+<iframe 
+  src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/zuhayrmeanie/eden_stardust-11-eden-sophiya&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&visual=false"
+  style="display:none;">
+</iframe>
+
+<div class="container">
+  <h1>For You, Bujji 💖</h1>
+  <div class="subtitle" id="subtitle"></div>
+  <img id="stage-photo" src="" style="display:none;">
+  <div class="emoji" id="stage-emoji">🎂</div>
+  <div class="stage-text" id="stage-text"></div>
+
+  <div class="nav" id="nav-buttons">
+    <button id="prevBtn" disabled>Previous</button>
+    <button id="nextBtn">Next</button>
+  </div>
+
+  <div id="yesno-section" style="display:none;">
+    <button class="yesno-btn yes-btn" onclick="chooseYes()">YES 💖</button>
+    <button class="yesno-btn no-btn" onclick="chooseNo()">NO 😢</button>
+  </div>
+
+  <div class="small-note">
+    Made with love by Karthik, only for Dhanya.
+  </div>
+</div>
+
+<script>
+  const photoURL = "https://raw.githubusercontent.com/karthiiiik14-jpg/Bujji-my-love/main/WhatsApp%20Image%202026-08-30%20at%2012.01.01%20PM.jpeg";
+
+  const stages = [
+    { subtitle: "Page 1", emoji: "🎂", photo: photoURL,
+      text:`Happy Birthday, my Bujji.
+
+I’ve been dreaming of this day for a long time.
+Today is your day, and I just want you to smile.` },
+
+    { subtitle: "Page 2", emoji: "💌", photo: photoURL,
+      text:`Hi Buii,
+
+Happy Birthday. I have dreamt many years ago this would happen...` },
+
+    { subtitle: "Page 3", emoji: "💗", photo: photoURL,
+      text:`Please give me a chance, Bujji...` },
+
+    { subtitle: "Page 4", emoji: "🤍", photo: photoURL,
+      text:`I know you don’t have feelings for me now...` },
+
+    { subtitle: "Page 5", emoji: "🧸", photo: photoURL,
+      text:`Don’t think I am mature while writing this love letter...` },
+
+    { subtitle: "Page 6", emoji: "🤝", photo: photoURL,
+      text:`My promises to you:
+
+• I will be loyal to you.
+• I will protect you.
+• I will stand with you.
+• I will grow with you.
+• I will love you every single day.` },
+
+    { subtitle: "Page 7", emoji: "🎂💍", photo: photoURL,
+      text:`A birthday cake for my heroine 🎂
+
+A ring for my future wife 💍` },
+
+    { subtitle: "Page 8", emoji: "🌹", photo: photoURL,
+      text:`You are my favourite person.
+
+My best friend.
+My heroine.
+My future.` },
+
+    { subtitle: "Page 9", emoji: "💍❤️", photo: photoURL,
+      text:`Dhanya, my Bujji…
+
+Will you be mine?` },
+
+    { subtitle: "Page 10", emoji: "✨", photo: photoURL,
+      text:`This is the moment…
+
+Bujji, will you say YES to me?` }
+  ];
+
+  let current = 0;
+
+  const subtitleEl = document.getElementById("subtitle");
+  const emojiEl = document.getElementById("stage-emoji");
+  const textEl = document.getElementById("stage-text");
+  const photoEl = document.getElementById("stage-photo");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const navButtons = document.getElementById("nav-buttons");
+  const yesnoSection = document.getElementById("yesno-section");
+
+  function renderStage() {
+    const s = stages[current];
+    subtitleEl.textContent = s.subtitle;
+    emojiEl.textContent = s.emoji;
+    textEl.textContent = s.text;
+
+    photoEl.src = s.photo;
+    photoEl.style.display = "block";
+
+    prevBtn.disabled = current === 0;
+
+    if (current === stages.length - 1) {
+      nextBtn.style.display = "none";
+      navButtons.style.display = "none";
+      yesnoSection.style.display = "block";
+    } else {
+      nextBtn.style.display = "block";
+      navButtons.style.display = "flex";
+      yesnoSection.style.display = "none";
+      nextBtn.disabled = false;
+    }
+  }
+
+  prevBtn.addEventListener("click", () => {
+    if (current > 0) {
+      current--;
+      renderStage();
+    }
+  });
+
+  nextBtn.addEventListener("click", () => {
+    if (current < stages.length - 1) {
+      current++;
+      renderStage();
+    }
+  });
+
+  function chooseYes() {
+    subtitleEl.textContent = "My Bujji said YES 💖";
+    emojiEl.textContent = "💍✨";
+    textEl.textContent = `You made me the happiest person today.
+
+I promise I will love you, protect you, and choose you every day.
+
+Forever yours,
+Karthik 💖`;
+    yesnoSection.style.display = "none";
+  }
+
+  function chooseNo() {
+    subtitleEl.textContent = "It’s okay, Bujji 🤍";
+    emojiEl.textContent = "😢";
+    textEl.textContent = `Even if you said no,
+I will still respect you, support you, and be there for you.
+
+Your happiness matters more than anything.`;
+    yesnoSection.style.display = "none";
+  }
+
+  renderStage();
+</script>
+
+</body>
+</html>
